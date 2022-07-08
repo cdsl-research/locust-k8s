@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: locust
+  labels:
+    name: locust-master
+  name: locust-master
+spec:
+  containers:
+    - name: locust-master
+      env:
+        - name: LOCUST_MODE
+          value: master
+        - name: LOCUST_LOCUSTFILE
+          value: /mnt/locustfile.py
+        - name: LOCUST_EXPECT_WORKERS
+          value: "2"
+      args:
+          - -f
+          - $(LOCUST_LOCUSTFILE)
+          - --master
+          - --expect-workers
+          - $(LOCUST_EXPECT_WORKERS)
+          - --csv
+          - "01"
+          - --headless
+          - -H
+          - "http://kazu-mn:30080"
+
+      image: kaxu/mylocust:v1.3
+      imagePullPolicy: Always 
+      ports:
+      - containerPort: 8089
+        name: master-web
+        protocol: TCP
+      - containerPort: 5557
+        name: master-p1
+        protocol: TCP
+      - containerPort: 5558
+        name: master-p2
+        protocol: TCP
+      volumeMounts:
+        - mountPath: /locust
+          name: claim-volume
+  volumes:
+    - name: claim-volume
+      persistentVolumeClaim:
+        claimName: master-claim
+  terminationGracePeriodSeconds: 0

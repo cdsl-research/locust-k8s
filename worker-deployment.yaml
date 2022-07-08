@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: locust-worker
+  name: locust-worker
+  namespace: locust
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+       app: locust-worker
+  template:
+    metadata:
+      labels:
+        app: locust-worker
+    spec:
+      containers:
+        - name: locust-worker 
+          args:
+            - --worker
+            - --master-host
+            - locust-service
+            - --master-port
+            - "5557"
+          env:
+            - name: LOCUST_HOST
+              value: http://kazu-mn:30080
+            - name: LOCUST_LOCUSTFILE
+              value: /mnt/locustfile.py
+          image: kaxu/mylocust:v1.2
+          imagePullPolicy: Always
