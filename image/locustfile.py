@@ -14,7 +14,7 @@ tasks = []
 with open(f"/mnt/sinario10.csv", "r", encoding="utf-8") as f:
     reader = csv.reader(f)
     for i in reader:
-        tasks.append(i)
+        tasks.append(i[1:])
 
 class MyUser(HttpUser):
 
@@ -35,17 +35,16 @@ class MyUser(HttpUser):
 
 class StagesShape(LoadTestShape):
     stages = [
-        {"duration": 300, "users": 2, "spawn_rate": 2},
-        {"duration": 600, "users": 7, "spawn_rate": 3},
-        {"duration": 900, "users": 20, "spawn_rate": 5},
-        {"duration": 1200, "users": 55, "spawn_rate": 5},
-        {"duration": 1500, "users": 150, "spawn_rate": 8},
-        {"duration": 1800, "users": 400, "spawn_rate": 15},
-        {"duration": 2100, "users": 1100, "spawn_rate": 40},
-        {"duration": 2400, "users": 3000, "spawn_rate": 80},
-        {"duration": 2700, "users": 8100, "spawn_rate": 90},
-        {"duration": 3000, "users": 22026, "spawn_rate": 180}
+        {"duration": 300, "users": 50, "spawn_rate": 50},
+        {"duration": 600, "users": 100, "spawn_rate": 100},
+        {"duration": 900, "users": 150, "spawn_rate": 150},
+        {"duration": 1200, "users": 200, "spawn_rate": 200},
+        {"duration": 1500, "users": 250, "spawn_rate": 250},
+        {"duration": 1800, "users": 300, "spawn_rate": 300},
+        {"duration": 2100, "users": 350, "spawn_rate": 350},
+        {"duration": 2400, "users": 400, "spawn_rate": 400}
     ]
+
     def tick(self):
         run_time = self.get_run_time()
         for stage in self.stages:
