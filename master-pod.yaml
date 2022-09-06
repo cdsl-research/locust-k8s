@@ -25,7 +25,7 @@ spec:
           - "/home/locust/mmm/01"
           - --headless
           - -H
-          - "http://192.168.100.140:30080"
+          - "(負荷対象のIPアドレスを指定)"
       image: kaxu/mylocust:v1.7  #change image
       imagePullPolicy: Always
       ports:
