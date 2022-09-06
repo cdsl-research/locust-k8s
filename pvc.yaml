@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-silo
+  namespace: locust #change namespace
+spec:
+  accessModes:
+  - ReadWriteMany
+  ## PVをラベルでマッチさせるため、Nullを設定
+  storageClassName: ""
+  resources:
+    requests:
+      storage: "1Gi"　#ストレージのサイズを変更
+  selector:
+    matchLabels:
+      name: pv-nfs #pvの名前に変更
+      release: prod
