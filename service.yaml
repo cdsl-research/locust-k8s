@@ -25,3 +25,38 @@ spec:
   selector:
     name: locust-master
   type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: locust-worker-service
+  namespace: locust
+  labels:
+    name: locust-worker-svc
+spec:
+  ports:
+  - name: worker
+    nodePort: 30095
+    port: 8089
+    protocol: TCP
+    targetPort: 8089
+  - name: worker1
+    nodePort: 30096
+    port: 5555
+    protocol: TCP
+    targetPort: 5555
+  - name: worker2
+    nodePort: 30097
+    port: 5557
+    protocol: TCP
+    targetPort: 5557
+  - name: worker3
+    nodePort: 30098
+    port: 5558
+    protocol: TCP
+    targetPort: 5558
+
+  selector:
+    name: locust-worker
+  type: NodePort
