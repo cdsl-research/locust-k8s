@@ -14,7 +14,7 @@ spec:
         - name: LOCUST_LOCUSTFILE
           value: /mnt/locustfile.py
         - name: LOCUST_EXPECT_WORKERS
-          value: "2"
+          value: "4"
       args:
           - -f
           - $(LOCUST_LOCUSTFILE)
@@ -22,13 +22,12 @@ spec:
           - --expect-workers
           - $(LOCUST_EXPECT_WORKERS)
           - --csv
-          - "01"
+          - "/home/locust/mmm/01"
           - --headless
           - -H
-          - "http://kazu-mn:30080"
-
-      image: kaxu/mylocust:v1.3
-      imagePullPolicy: Always 
+          - "http://192.168.100.140:30080"
+      image: kaxu/mylocust:v1.7  #change image
+      imagePullPolicy: Always
       ports:
       - containerPort: 8089
         name: master-web
@@ -40,10 +39,11 @@ spec:
         name: master-p2
         protocol: TCP
       volumeMounts:
-        - mountPath: /locust
+        - mountPath: /home/locust/mmm
           name: claim-volume
   volumes:
     - name: claim-volume
       persistentVolumeClaim:
-        claimName: master-claim
+        claimName: nfs-silo
   terminationGracePeriodSeconds: 0
+  restartPolicy: Never
