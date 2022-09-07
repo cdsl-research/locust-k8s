@@ -26,7 +26,7 @@ spec:
           - --headless
           - -H
           - "(負荷対象のIPアドレスを指定)"
-      image: kaxu/mylocust:v1.7  #change image
+      image: (change image)
       imagePullPolicy: Always
       ports:
       - containerPort: 8089
